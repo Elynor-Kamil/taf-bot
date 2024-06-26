@@ -28,29 +28,29 @@ class General(commands.Cog, name="general"):
         )
         self.bot.tree.add_command(self.context_menu_message)
 
-    # Message context menu command
-    async def remove_spoilers(
-        self, interaction: discord.Interaction, message: discord.Message
-    ) -> None:
-        """
-        Removes the spoilers from the message. This command requires the MESSAGE_CONTENT intent to work properly.
-
-        :param interaction: The application command interaction.
-        :param message: The message that is being interacted with.
-        """
-        spoiler_attachment = None
-        for attachment in message.attachments:
-            if attachment.is_spoiler():
-                spoiler_attachment = attachment
-                break
-        embed = discord.Embed(
-            title="Message without spoilers",
-            description=message.content.replace("||", ""),
-            color=0xBEBEFE,
-        )
-        if spoiler_attachment is not None:
-            embed.set_image(url=attachment.url)
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+    # # Message context menu command
+    # async def remove_spoilers(
+    #     self, interaction: discord.Interaction, message: discord.Message
+    # ) -> None:
+    #     """
+    #     Removes the spoilers from the message. This command requires the MESSAGE_CONTENT intent to work properly.
+    #
+    #     :param interaction: The application command interaction.
+    #     :param message: The message that is being interacted with.
+    #     """
+    #     spoiler_attachment = None
+    #     for attachment in message.attachments:
+    #         if attachment.is_spoiler():
+    #             spoiler_attachment = attachment
+    #             break
+    #     embed = discord.Embed(
+    #         title="Message without spoilers",
+    #         description=message.content.replace("||", ""),
+    #         color=0xBEBEFE,
+    #     )
+    #     if spoiler_attachment is not None:
+    #         embed.set_image(url=attachment.url)
+    #     await interaction.response.send_message(embed=embed, ephemeral=True)
 
     # User context menu command
     async def grab_id(
@@ -186,25 +186,25 @@ class General(commands.Cog, name="general"):
         except discord.Forbidden:
             await context.send(embed=embed)
 
-    @commands.hybrid_command(
-        name="server",
-        description="Get the invite link of the discord server of the bot for some support.",
-    )
-    async def server(self, context: Context) -> None:
-        """
-        Get the invite link of the discord server of the bot for some support.
-
-        :param context: The hybrid command context.
-        """
-        embed = discord.Embed(
-            description=f"Join the support server for the bot by clicking [here](https://discord.gg/mTBrXyWxAF).",
-            color=0xD75BF4,
-        )
-        try:
-            await context.author.send(embed=embed)
-            await context.send("I sent you a private message!")
-        except discord.Forbidden:
-            await context.send(embed=embed)
+    # @commands.hybrid_command(
+    #     name="server",
+    #     description="Get the invite link of the discord server of the bot for some support.",
+    # )
+    # async def server(self, context: Context) -> None:
+    #     """
+    #     Get the invite link of the discord server of the bot for some support.
+    #
+    #     :param context: The hybrid command context.
+    #     """
+    #     embed = discord.Embed(
+    #         description=f"Join the support server for the bot by clicking [here](https://discord.gg/mTBrXyWxAF).",
+    #         color=0xD75BF4,
+    #     )
+    #     try:
+    #         await context.author.send(embed=embed)
+    #         await context.send("I sent you a private message!")
+    #     except discord.Forbidden:
+    #         await context.send(embed=embed)
 
     @commands.hybrid_command(
         name="8ball",
@@ -247,38 +247,6 @@ class General(commands.Cog, name="general"):
         )
         embed.set_footer(text=f"The question was: {question}")
         await context.send(embed=embed)
-
-    @commands.hybrid_command(
-        name="bitcoin",
-        description="Get the current price of bitcoin.",
-    )
-    async def bitcoin(self, context: Context) -> None:
-        """
-        Get the current price of bitcoin.
-
-        :param context: The hybrid command context.
-        """
-        # This will prevent your bot from stopping everything when doing a web request - see: https://discordpy.readthedocs.io/en/stable/faq.html#how-do-i-make-a-web-request
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
-            ) as request:
-                if request.status == 200:
-                    data = await request.json(
-                        content_type="application/javascript"
-                    )  # For some reason the returned content is of type JavaScript
-                    embed = discord.Embed(
-                        title="Bitcoin price",
-                        description=f"The current price is {data['bpi']['USD']['rate']} :dollar:",
-                        color=0xBEBEFE,
-                    )
-                else:
-                    embed = discord.Embed(
-                        title="Error!",
-                        description="There is something wrong with the API, please try again later",
-                        color=0xE02B2B,
-                    )
-                await context.send(embed=embed)
 
 
 async def setup(bot) -> None:
