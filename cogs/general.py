@@ -28,10 +28,10 @@ class General(commands.Cog, name="general"):
             name="Grab ID", callback=self.grab_id
         )
         self.bot.tree.add_command(self.context_menu_user)
-        self.context_menu_message = app_commands.ContextMenu(
-            name="Remove spoilers", callback=self.remove_spoilers
-        )
-        self.bot.tree.add_command(self.context_menu_message)
+        # self.context_menu_message = app_commands.ContextMenu(
+        #     name="Remove spoilers", callback=self.remove_spoilers
+        # )
+        # self.bot.tree.add_command(self.context_menu_message)
 
     # # Message context menu command
     # async def remove_spoilers(
@@ -99,7 +99,9 @@ class General(commands.Cog, name="general"):
     @commands.hybrid_command(
         name="botinfo",
         description="Get some useful (or not) information about the bot.",
+        guild=discord.Object(id=1255558358790832291)
     )
+    @app_commands.guilds(discord.Object(id=1255558358790832291))  # Place your guild ID here
     async def botinfo(self, context: Context) -> None:
         """
         Get some useful (or not) information about the bot.
@@ -122,6 +124,7 @@ class General(commands.Cog, name="general"):
         )
         embed.set_footer(text=f"Requested by {context.author}")
         await context.send(embed=embed)
+
 
     @commands.hybrid_command(
         name="serverinfo",
