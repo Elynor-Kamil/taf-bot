@@ -7,13 +7,18 @@ Version: 6.1.0
 """
 
 import platform
+import os
 import random
+from dotenv import load_dotenv
 
 import aiohttp
 import discord
 from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import Context
+
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
 
 
 class General(commands.Cog, name="general"):

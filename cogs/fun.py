@@ -34,6 +34,7 @@ class Choice(discord.ui.View):
         self.stop()
 
 
+# todo: mod this to be applicable for fights - first without quirks considered
 class RockPaperScissors(discord.ui.Select):
     def __init__(self) -> None:
         options = [
